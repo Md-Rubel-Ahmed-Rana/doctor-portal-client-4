@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { signIn }  = useContext(AuthContext);
+    const { signIn, googleSignIn }  = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate()
     const from = location.state?.from?.pathname || "/"
@@ -47,10 +47,10 @@ const Login = () => {
                         <p>New To Doctor Portal? <Link to="/signup" className="text-secondary">Create an account</Link> </p>
                     </div>
                     <div className="divider">OR</div>
-                   <div className="text-center">
-                        <button className="btn btn-outline">CONTINIUE WITH GOOGLE</button>
-                   </div>
                 </form>
+                <div className="text-center">
+                    <button onClick={googleSignIn} className="btn btn-outline">CONTINIUE WITH GOOGLE</button>
+                </div>
             </div>
         </div>
     );

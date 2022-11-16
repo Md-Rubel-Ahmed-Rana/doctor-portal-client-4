@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from '../../contexts/AuthProvider';
 import toast from 'react-hot-toast';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser, updateUser } = useContext(AuthContext)
+    const { createUser, updateUser, googleSignIn } = useContext(AuthContext);
+    const navigate = useNavigate()
 
 
     const handleSignUp = (data) => {
@@ -15,10 +16,9 @@ const SignUp = () => {
             toast("User created successfully")
             const userInfo = {displayName: data.name}
             updateUser(userInfo)
-            .then((result) => {
+            .then(() => {
                 toast("User updated successfully")
-                const user = result.user;
-                console.log(user);
+                navigate("/")
             })
             .catch((err) => console.log(err))
         })
@@ -66,10 +66,10 @@ const SignUp = () => {
                         <p>Already have an account? <Link to="/login" className="text-secondary">Login</Link> </p>
                     </div>
                     <div className="divider">OR</div>
-                    <div className="text-center">
-                        <button className="btn btn-outline">CONTINIUE WITH GOOGLE</button>
-                    </div>
                 </form>
+                <div className="text-center">
+                    <button onClick={googleSignIn} className="btn btn-outline">CONTINIUE WITH GOOGLE</button>
+                </div>
             </div>
         </div>
     );
